@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
-    android:padding="20dp"
     app:cardCornerRadius="5dp"
-    app:cardElevation="5dp">
+    app:cardElevation="10dp"
+    android:layout_marginHorizontal="5dp"
+    android:layout_marginVertical="10dp"
+    >
+
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="20dp">
         <ImageView
             android:id="@+id/ivImage"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:src="@mipmap/ic_launcher"
             android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/journalTitle"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Journal name"
@@ -28,14 +35,24 @@
 
             />
         <TextView
-            android:id="@+id/journalDescription"
+            android:id="@+id/journalLocation"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Journal name"
-            android:textStyle="bold"
-            android:layout_below="@+id/ivImage"
-            android:textSize="18sp"
+            android:textSize="10sp"
+            android:text="Journal location"
+            android:layout_below="@+id/journalTitle"
             />
+<!--        <TextView-->
+<!--            android:id="@+id/journalDescription"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Journal description"-->
+<!--            android:layout_below="@+id/journalLocation"-->
+<!--            />-->
+
     </RelativeLayout>
+
 
 </androidx.cardview.widget.CardView>

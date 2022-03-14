@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/bottomSheet"
+    android:layout_margin="20dp">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+    <TextView
+        android:id="@+id/journalTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Journal name"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginBottom="20dp"
+        />
+
+    <ImageView
+        android:id="@+id/journalImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/journalTitle"
+        android:src="@mipmap/ic_launcher"
+        android:layout_centerVertical="true"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="20dp"
+        />
+
+    <TextView
+        android:id="@+id/journalLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:textSize="10sp"
+        android:layout_below="@+id/journalImage"
+        android:layout_marginBottom="20dp"/>
+
+
+    <TextView
+        android:id="@+id/journalDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/journalLocation"
+        android:layout_marginBottom="20dp"
+        android:text="description of journey journal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/journalDescription">
+
+        <Button
+            android:id="@+id/edit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:layout_marginEnd="5dp"
+            android:padding="15dp"/>
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#ff0000"
+            android:text="Delete"
+            android:layout_marginStart="5dp"
+            android:padding="15dp"/>
+
+
+    </LinearLayout>
+
+</RelativeLayout>
+</ScrollView>

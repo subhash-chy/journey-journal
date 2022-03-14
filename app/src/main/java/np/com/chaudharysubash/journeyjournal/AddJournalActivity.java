@@ -45,7 +45,7 @@ public class AddJournalActivity extends AppCompatActivity {
         imageButton = findViewById(R.id.imageButton);
 
         titleEdt = findViewById(R.id.title);
-        descriptionEdt = findViewById(R.id.title);
+        descriptionEdt = findViewById(R.id.description);
         locationEdt = findViewById(R.id.location);
         loadingBar = findViewById(R.id.progressBar);
 
@@ -72,9 +72,9 @@ public class AddJournalActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loadingBar.setVisibility(View.VISIBLE);
-                String title = titleEdt.getText().toString().trim();
-                String description = descriptionEdt.getText().toString().trim();
-                String location = locationEdt.getText().toString().trim();
+                String title = titleEdt.getText().toString();
+                String description = descriptionEdt.getText().toString();
+                String location = locationEdt.getText().toString();
 //                TODO: Image
 
                 journalId = title;
