@@ -48,7 +48,7 @@ public class EditJournalActivity extends AppCompatActivity {
         imageButton = findViewById(R.id.imageButton);
 
         titleEdt = findViewById(R.id.title);
-        descriptionEdt = findViewById(R.id.title);
+        descriptionEdt = findViewById(R.id.description);
         locationEdt = findViewById(R.id.location);
         loadingBar = findViewById(R.id.progressBar);
 

@@ -52,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadingBar.setVisibility(View.VISIBLE);
                 validateUser();
             }
 
@@ -64,6 +63,8 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "All credentials should be entered to login!", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
+                    loadingBar.bringToFront();
+                    loadingBar.setVisibility(View.VISIBLE);
                     mAuth.signInWithEmailAndPassword(email,pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -75,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                                 finish();
                             } else {
                                 loadingBar.setVisibility(View.GONE);
-                                Toast.makeText(LoginActivity.this, "Login failed! Please try again later!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Invalid Credentials!", Toast.LENGTH_SHORT).show();
 
                             }
                         }
