@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHolder> {
@@ -43,6 +45,7 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHold
         holder.titleTV.setText(journalRVModal.getTitle());
 //        holder.descriptionTV.setText(journalRVModal.getDescription());
         holder.locationTV.setText(journalRVModal.getLocation());
+//        Picasso.get().load(journalRVModal.getImageURL()).into(holder.imageView);
 
 //        Picasso.get().load(journalRVModal.getJournalImg().into(holder.imageView));
 

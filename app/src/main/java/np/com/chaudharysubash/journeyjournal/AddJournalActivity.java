@@ -18,13 +18,17 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class AddJournalActivity extends AppCompatActivity {
     private ImageView imageView;
@@ -86,33 +90,70 @@ public class AddJournalActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadingBar.setVisibility(View.VISIBLE);
                 String title = titleEdt.getText().toString();
                 String description = descriptionEdt.getText().toString();
                 String location = locationEdt.getText().toString();
-                String imagePath = "ewj";
+//                String imagePath = "ewj";
 //                TODO: Image
 
                 journalId = title;
-                JournalRVModal journalRVModal = new JournalRVModal(journalId,title,description,location, imagePath);
+//                Creating second storage reference
+                StorageReference storageReference2 = storageReference.child(Storage_Path+System.currentTimeMillis());
 
-                databaseReference.addValueEventListener(new ValueEventListener() {
+//                Adding on success listener
+                storageReference2.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         loadingBar.setVisibility(View.GONE);
+                        JournalRVModal journalRVModal = new JournalRVModal(journalId,title,description,location, taskSnapshot.getUploadSessionUri().toString());
+
+//                        String imageUploadId = databaseReference.push().getKey();
                         databaseReference.child(journalId).setValue(journalRVModal);
+
                         Toast.makeText(AddJournalActivity.this, "Journal added successfully!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(AddJournalActivity.this, MainActivity.class);
                         startActivity(intent);
                     }
-
+                })
+//                        If task fails, we will add on failure listener
+                        .addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                    public void onFailure(@NonNull Exception e) {
+//                        Hiding loading bar
                         loadingBar.setVisibility(View.GONE);
-                        Toast.makeText(AddJournalActivity.this, "Error: "+ error, Toast.LENGTH_SHORT).show();
+//                        Showing error as a toast message
+                        Toast.makeText(AddJournalActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+
+
+                    }
+                })
+//                        Data saving or uploading on progress
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+
+                        loadingBar.setVisibility(View.VISIBLE);
 
                     }
                 });
+
+//                databaseReference.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        loadingBar.setVisibility(View.GONE);
+//                        databaseReference.child(journalId).setValue(journalRVModal);
+//                        Toast.makeText(AddJournalActivity.this, "Journal added successfully!", Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(AddJournalActivity.this, MainActivity.class);
+//                        startActivity(intent);
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//                        loadingBar.setVisibility(View.GONE);
+//                        Toast.makeText(AddJournalActivity.this, "Error: "+ error, Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                });
             }
         });
     }
@@ -128,13 +169,4 @@ public class AddJournalActivity extends AppCompatActivity {
 
     }
 
-    // Creating Method to get the selected image file Extension from File Path URI.
-    public String GetFileExtension(Uri uri) {
-        ContentResolver contentResolver = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-
-        // Returning the file Extension as string.
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri)) ;
-
-    }
 }
