@@ -8,6 +8,7 @@ public class JournalRVModal implements Parcelable {
     private String description;
     private String location;
     private String journalId;
+    public String imageURL;
 
 
 //    Creating constructor
@@ -20,6 +21,7 @@ public class JournalRVModal implements Parcelable {
         description = in.readString();
         location = in.readString();
         journalId = in.readString();
+        imageURL = in.readString();
     }
 
     public static final Creator<JournalRVModal> CREATOR = new Creator<JournalRVModal>() {
@@ -66,11 +68,20 @@ public class JournalRVModal implements Parcelable {
         this.journalId = journalId;
     }
 
-    public JournalRVModal(String journalId, String title, String description, String location) {
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public JournalRVModal(String journalId, String title, String description, String location, String imageUrl) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.journalId = journalId;
+        this.imageURL = imageUrl;
     }
 
     @Override

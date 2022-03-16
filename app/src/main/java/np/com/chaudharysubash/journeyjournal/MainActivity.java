@@ -67,15 +67,20 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
         rvJournal.setLayoutManager(new LinearLayoutManager(this));
         rvJournal.setAdapter(journalAdapter);
 
-        addNewJournal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddJournalActivity.class);
-                startActivity(intent);
-            }
-        });
+
         getAllJournals();
     }
+
+
+
+
+//    addNewJournal.setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            Intent intent = new Intent(MainActivity.this, AddJournalActivity.class);
+//            startActivity(intent);
+//        }
+//    });
 
 //    Creating method for reading all journals coming from firebase database
     private void getAllJournals(){
@@ -156,7 +161,6 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
     }
 
 //    On create option menu
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -179,5 +183,10 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    public void onClickAddNewJournal(View view) {
+        Intent intent = new Intent(MainActivity.this, AddJournalActivity.class);
+            startActivity(intent);
     }
 }

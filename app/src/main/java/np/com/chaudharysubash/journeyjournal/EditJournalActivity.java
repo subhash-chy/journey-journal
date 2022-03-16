@@ -23,11 +23,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EditJournalActivity extends AppCompatActivity {
-    ImageView imageView;
-    ImageButton imageButton;
-    EditText titleEdt, descriptionEdt, locationEdt;
-    ProgressBar loadingBar;
-    Button update, delete;
+    private ImageView imageView;
+    private ImageButton imageButton;
+    private EditText titleEdt, descriptionEdt, locationEdt;
+    private ProgressBar loadingBar;
+    private Button update, delete;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -102,7 +102,6 @@ public class EditJournalActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 deleteJournal();
-
             }
         });
     }

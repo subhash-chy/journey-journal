@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -21,16 +23,25 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class AddJournalActivity extends AppCompatActivity {
-    ImageView imageView;
-    ImageButton imageButton;
-    EditText titleEdt, descriptionEdt, locationEdt;
-    ProgressBar loadingBar;
-    Button save;
+    private ImageView imageView;
+    private ImageButton imageButton;
+    private EditText titleEdt, descriptionEdt, locationEdt;
+    private ProgressBar loadingBar;
+    private Button save;
 
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+
+    // Folder path for Firebase Storage.
+    String Storage_Path = "images/";
+
+    private Uri filePath;
 
     private String journalId;
 
@@ -49,6 +60,10 @@ public class AddJournalActivity extends AppCompatActivity {
         locationEdt = findViewById(R.id.location);
         loadingBar = findViewById(R.id.progressBar);
 
+
+        // get the Firebase  storage reference
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Journals");
 
@@ -75,10 +90,11 @@ public class AddJournalActivity extends AppCompatActivity {
                 String title = titleEdt.getText().toString();
                 String description = descriptionEdt.getText().toString();
                 String location = locationEdt.getText().toString();
+                String imagePath = "ewj";
 //                TODO: Image
 
                 journalId = title;
-                JournalRVModal journalRVModal = new JournalRVModal(journalId,title,description,location);
+                JournalRVModal journalRVModal = new JournalRVModal(journalId,title,description,location, imagePath);
 
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -107,8 +123,18 @@ public class AddJournalActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
 //        selected image path will be stored in uri variable
-        Uri uri = data.getData();
-        imageView.setImageURI(uri);
+        filePath = data.getData();
+        imageView.setImageURI(filePath);
+
+    }
+
+    // Creating Method to get the selected image file Extension from File Path URI.
+    public String GetFileExtension(Uri uri) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+
+        // Returning the file Extension as string.
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri)) ;
 
     }
 }
