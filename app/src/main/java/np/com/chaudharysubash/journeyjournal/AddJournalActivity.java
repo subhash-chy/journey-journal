@@ -93,10 +93,9 @@ public class AddJournalActivity extends AppCompatActivity {
                 String title = titleEdt.getText().toString();
                 String description = descriptionEdt.getText().toString();
                 String location = locationEdt.getText().toString();
-//                String imagePath = "ewj";
-//                TODO: Image
 
                 journalId = title;
+
 //                Creating second storage reference
                 StorageReference storageReference2 = storageReference.child(Storage_Path+System.currentTimeMillis());
 

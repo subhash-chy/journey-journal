@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +43,7 @@ public class EditJournalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_journal);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
+
         update = findViewById(R.id.update);
         delete = findViewById(R.id.delete);
         imageView = findViewById(R.id.imageView);
@@ -57,6 +59,12 @@ public class EditJournalActivity extends AppCompatActivity {
             titleEdt.setText(journalRVModal.getTitle());
             descriptionEdt.setText(journalRVModal.getDescription());
             locationEdt.setText(journalRVModal.getLocation());
+
+//            Loading image into imageView
+            String imageUrl = null;
+            imageUrl = journalRVModal.getImageURL();
+            Picasso.get().load(imageUrl).fit().into(imageView);
+
             journalId = journalRVModal.getJournalId();
         }
 
@@ -76,6 +84,7 @@ public class EditJournalActivity extends AppCompatActivity {
                 map.put("description",description);
                 map.put("location",location);
                 map.put("journalId",journalId);
+
 
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override

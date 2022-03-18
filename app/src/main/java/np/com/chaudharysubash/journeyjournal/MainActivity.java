@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -101,12 +103,6 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
                 loadingBar.setVisibility(View.GONE);
-//                if (snapshot.exists()){
-//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                        Upload upload = dataSnapshot.getValue(Upload.class);
-//                        mUploads.add(upload);
-//                        Toast.makeText(getActivity(),"Success",Toast.LENGTH_SHORT).show(); }
-//                } else { Toast.makeText(getActivity(), "Failure",Toast.LENGTH_SHORT).show(); } //notify the adapter postsAdapter.notifyDataSetChanged(); }
                 journalAdapter.notifyDataSetChanged();
             }
 
@@ -151,10 +147,16 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
         TextView journalTitleTV = layout.findViewById(R.id.journalTitle);
         TextView journalDescriptionTV = layout.findViewById(R.id.journalDescription);
         TextView journalLocationTV = layout.findViewById(R.id.journalLocation);
+        ImageView imageView = layout.findViewById(R.id.journalImage);
 
         journalTitleTV.setText(journalRVModal.getTitle());
         journalDescriptionTV.setText(journalRVModal.getDescription());
         journalLocationTV.setText(journalRVModal.getLocation());
+
+//        Loading image
+        String imageUrl = null;
+        imageUrl = journalRVModal.getImageURL();
+        Picasso.get().load(imageUrl).fit().into(imageView);
 
 //        Delete button pressed
 
