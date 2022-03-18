@@ -26,16 +26,18 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements JournalAdapter.JournalClickInterface {
-    private RecyclerView rvJournal;
+    private RecyclerView recyclerView;
     private ProgressBar loadingBar;
     private FloatingActionButton addNewJournal;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+    private FirebaseStorage firebaseStorage;
     private ArrayList<JournalRVModal> journalRVModalArrayList;
 
     private ScrollView bottomSheetRL;
@@ -49,7 +51,8 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        rvJournal = findViewById(R.id.rvJournal);
+        recyclerView = findViewById(R.id.rvJournal);
+//        recyclerView.setHasFixedSize(true);
         loadingBar = findViewById(R.id.progressBar);
 
 //        Showing progressbar as soon as user comes to MainActivity
@@ -59,13 +62,14 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Journals");
+        firebaseStorage = FirebaseStorage.getInstance();
         journalRVModalArrayList = new ArrayList<>();
 
         bottomSheetRL = findViewById(R.id.bottomSheet);
         mAuth = FirebaseAuth.getInstance();
         journalAdapter = new JournalAdapter(journalRVModalArrayList, this, this);
-        rvJournal.setLayoutManager(new LinearLayoutManager(this));
-        rvJournal.setAdapter(journalAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(journalAdapter);
 
 
         getAllJournals();
@@ -97,6 +101,12 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
                 loadingBar.setVisibility(View.GONE);
+//                if (snapshot.exists()){
+//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                        Upload upload = dataSnapshot.getValue(Upload.class);
+//                        mUploads.add(upload);
+//                        Toast.makeText(getActivity(),"Success",Toast.LENGTH_SHORT).show(); }
+//                } else { Toast.makeText(getActivity(), "Failure",Toast.LENGTH_SHORT).show(); } //notify the adapter postsAdapter.notifyDataSetChanged(); }
                 journalAdapter.notifyDataSetChanged();
             }
 

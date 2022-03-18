@@ -68,9 +68,7 @@ public class JournalRVModal implements Parcelable {
         this.journalId = journalId;
     }
 
-    public String getImageURL() {
-        return imageURL;
-    }
+    public String getImageURL() { return imageURL; }
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
@@ -95,5 +93,6 @@ public class JournalRVModal implements Parcelable {
         parcel.writeString(description);
         parcel.writeString(location);
         parcel.writeString(journalId);
+        parcel.writeString(imageURL);
     }
 }

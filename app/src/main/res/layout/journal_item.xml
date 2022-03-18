@@ -14,8 +14,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/ivImage"
             android:layout_width="match_parent"
@@ -32,6 +31,7 @@
             android:textStyle="bold"
             android:layout_below="@+id/ivImage"
             android:textSize="18sp"
+            android:paddingHorizontal="20dp"
 
             />
         <TextView
@@ -41,6 +41,8 @@
             android:layout_height="wrap_content"
             android:textSize="10sp"
             android:text="Journal location"
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="20dp"
             android:layout_below="@+id/journalTitle"
             />
 <!--        <TextView-->

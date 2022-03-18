@@ -104,15 +104,22 @@ public class AddJournalActivity extends AppCompatActivity {
                 storageReference2.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                        Making progressbar invisible
                         loadingBar.setVisibility(View.GONE);
-                        JournalRVModal journalRVModal = new JournalRVModal(journalId,title,description,location, taskSnapshot.getUploadSessionUri().toString());
 
-//                        String imageUploadId = databaseReference.push().getKey();
-                        databaseReference.child(journalId).setValue(journalRVModal);
+//                        Saving data on firebase and getting image download url
+                        storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String url = uri.toString();
+                                JournalRVModal journalRVModal = new JournalRVModal(journalId,title,description,location, url);
+                                databaseReference.child(journalId).setValue(journalRVModal);
 
-                        Toast.makeText(AddJournalActivity.this, "Journal added successfully!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(AddJournalActivity.this, MainActivity.class);
-                        startActivity(intent);
+                                Toast.makeText(AddJournalActivity.this, "Journal added successfully!", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(AddJournalActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        });
                     }
                 })
 //                        If task fails, we will add on failure listener

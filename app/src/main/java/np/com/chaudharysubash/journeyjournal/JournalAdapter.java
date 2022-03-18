@@ -2,6 +2,7 @@ package np.com.chaudharysubash.journeyjournal;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +10,19 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoProvider;
 
 import java.util.ArrayList;
 
 public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHolder> {
+//    FirebaseDatabase database = FirebaseDatabase.getInstance();
     private ArrayList<JournalRVModal> journalRVModalArrayList;
     private Context context;
     int lastPosition = -1;
@@ -45,9 +50,13 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHold
         holder.titleTV.setText(journalRVModal.getTitle());
 //        holder.descriptionTV.setText(journalRVModal.getDescription());
         holder.locationTV.setText(journalRVModal.getLocation());
-//        Picasso.get().load(journalRVModal.getImageURL()).into(holder.imageView);
 
-//        Picasso.get().load(journalRVModal.getJournalImg().into(holder.imageView));
+        String imageUrl  = null;
+//                =  "https://images.pexels.com/photos/10164553/pexels-photo-10164553.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
+
+        imageUrl = journalRVModal.getImageURL();
+        Picasso.get().load(imageUrl).fit().into(holder.imageView);
+
 
         setAnimation(holder.itemView,position);
 
@@ -80,8 +89,6 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHold
             titleTV = itemView.findViewById(R.id.journalTitle);
             locationTV = itemView.findViewById(R.id.journalLocation);
             imageView = itemView.findViewById(R.id.ivImage);
-
-
         }
     }
 
