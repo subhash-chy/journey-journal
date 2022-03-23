@@ -57,6 +57,9 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHold
         Picasso.get().load(imageUrl).fit().into(holder.imageView);
         holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
+//        Setting date
+        holder.dateTV.setText(journalRVModal.getDate());
+
 
         setAnimation(holder.itemView,position);
 
@@ -95,13 +98,14 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 //        descriptionTV
-        private TextView titleTV, locationTV;
+        private TextView titleTV, locationTV, dateTV;
         private ImageView imageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTV = itemView.findViewById(R.id.journalTitle);
             locationTV = itemView.findViewById(R.id.journalLocation);
             imageView = itemView.findViewById(R.id.ivImage);
+            dateTV = itemView.findViewById(R.id.journalDate);
         }
     }
 

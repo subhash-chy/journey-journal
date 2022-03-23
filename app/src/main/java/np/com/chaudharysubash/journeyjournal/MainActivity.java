@@ -148,21 +148,25 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
         TextView journalDescriptionTV = layout.findViewById(R.id.journalDescription);
         TextView journalLocationTV = layout.findViewById(R.id.journalLocation);
         ImageView imageView = layout.findViewById(R.id.journalImage);
+        TextView dateTV = layout.findViewById(R.id.journalDate);
 
         journalTitleTV.setText(journalRVModal.getTitle());
         journalDescriptionTV.setText(journalRVModal.getDescription());
         journalLocationTV.setText(journalRVModal.getLocation());
+        dateTV.setText(journalRVModal.getDate());
 
 //        Loading image
         String imageUrl = null;
         imageUrl = journalRVModal.getImageURL();
         Picasso.get().load(imageUrl).fit().into(imageView);
 
-//        Delete button pressed
+        String journalId = journalRVModal.getJournalId();
+        DatabaseReference databaseReference2 = firebaseDatabase.getReference("Journals").child(journalId);
+        //        Delete button pressed
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                databaseReference.removeValue();
+                databaseReference2.removeValue();
                 Toast.makeText(MainActivity.this, "Journal deleted successfully!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(intent);

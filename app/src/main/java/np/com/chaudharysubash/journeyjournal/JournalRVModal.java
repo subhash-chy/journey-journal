@@ -8,7 +8,9 @@ public class JournalRVModal implements Parcelable {
     private String description;
     private String location;
     private String journalId;
-    public String imageURL;
+    private String imageURL;
+    private String date;
+
 
 
 //    Creating constructor
@@ -22,6 +24,7 @@ public class JournalRVModal implements Parcelable {
         location = in.readString();
         journalId = in.readString();
         imageURL = in.readString();
+        date = in.readString();
     }
 
     public static final Creator<JournalRVModal> CREATOR = new Creator<JournalRVModal>() {
@@ -35,6 +38,14 @@ public class JournalRVModal implements Parcelable {
             return new JournalRVModal[size];
         }
     };
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String getTitle() {
         return title;
@@ -74,12 +85,13 @@ public class JournalRVModal implements Parcelable {
         this.imageURL = imageURL;
     }
 
-    public JournalRVModal(String journalId, String title, String description, String location, String imageUrl) {
+    public JournalRVModal(String journalId, String title, String description, String location, String imageUrl, String date) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.journalId = journalId;
         this.imageURL = imageUrl;
+        this.date = date;
     }
 
     @Override
@@ -94,5 +106,6 @@ public class JournalRVModal implements Parcelable {
         parcel.writeString(location);
         parcel.writeString(journalId);
         parcel.writeString(imageURL);
+        parcel.writeString(date);
     }
 }

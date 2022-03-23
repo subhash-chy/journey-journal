@@ -30,21 +30,40 @@
         android:layout_marginBottom="20dp"
         />
 
+<LinearLayout
+    android:id="@+id/linearLocAndDate"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/journalImage"
+    android:layout_marginBottom="20dp">
     <TextView
         android:id="@+id/journalLocation"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="Location"
         android:textSize="10sp"
-        android:layout_below="@+id/journalImage"
-        android:layout_marginBottom="20dp"/>
+        android:layout_below="@+id/journalImage"/>
+
+    <TextView
+        android:id="@+id/journalDate"
+        android:textAlignment="textEnd"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:textSize="10sp"
+        android:layout_below="@+id/journalImage"/>
+
+
+</LinearLayout>
 
 
     <TextView
         android:id="@+id/journalDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/journalLocation"
+        android:layout_below="@+id/linearLocAndDate"
         android:layout_marginBottom="20dp"
         android:text="description of journey journal" />
 

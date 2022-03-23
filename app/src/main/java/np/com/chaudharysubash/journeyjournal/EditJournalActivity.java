@@ -68,7 +68,6 @@ public class EditJournalActivity extends AppCompatActivity {
         }
 
         databaseReference = firebaseDatabase.getReference("Journals").child(journalId);
-
 //        Update button clicked
         update.setOnClickListener(new View.OnClickListener() {
             @Override

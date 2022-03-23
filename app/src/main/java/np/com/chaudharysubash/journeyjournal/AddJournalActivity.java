@@ -30,6 +30,11 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class AddJournalActivity extends AppCompatActivity {
     private ImageView imageView;
     private ImageButton imageButton;
@@ -108,10 +113,14 @@ public class AddJournalActivity extends AppCompatActivity {
 
 //                        Saving data on firebase and getting image download url
                         storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+                            Date d = Calendar.getInstance().getTime();
+                            SimpleDateFormat  sdf= new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                            String formattedDate = sdf.format(d);
                             @Override
                             public void onSuccess(Uri uri) {
                                 String url = uri.toString();
-                                JournalRVModal journalRVModal = new JournalRVModal(journalId,title,description,location, url);
+                                JournalRVModal journalRVModal = new JournalRVModal(journalId,title,description,location, url, formattedDate);
                                 databaseReference.child(journalId).setValue(journalRVModal);
 
                                 Toast.makeText(AddJournalActivity.this, "Journal added successfully!", Toast.LENGTH_SHORT).show();
