@@ -34,25 +34,34 @@
             android:paddingHorizontal="20dp"
 
             />
-        <TextView
-            android:id="@+id/journalLocation"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:text="Journal location"
-            android:paddingHorizontal="20dp"
-            android:paddingBottom="20dp"
-            android:layout_below="@+id/journalTitle"
-            />
-<!--        <TextView-->
-<!--            android:id="@+id/journalDescription"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Journal description"-->
-<!--            android:layout_below="@+id/journalLocation"-->
-<!--            />-->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="20dp"
+    android:orientation="horizontal"
+    android:paddingHorizontal="20dp"
+
+    android:layout_below="@+id/journalTitle">
+    <TextView
+        android:id="@+id/journalLocation"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:text="Journal location"
+        />
+    <TextView
+        android:id="@+id/journalDate"
+        android:layout_marginTop="5dp"
+        android:textAlignment="textEnd"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:textSize="10sp"
+        android:layout_height="wrap_content"
+        android:text="Journal description"
+        />
+</LinearLayout>
 
     </RelativeLayout>
 

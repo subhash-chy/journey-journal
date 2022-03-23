@@ -28,7 +28,7 @@ public class EditJournalActivity extends AppCompatActivity {
     private ImageButton imageButton;
     private EditText titleEdt, descriptionEdt, locationEdt;
     private ProgressBar loadingBar;
-    private Button update, delete;
+    private Button update;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -45,7 +45,6 @@ public class EditJournalActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         update = findViewById(R.id.update);
-        delete = findViewById(R.id.delete);
         imageView = findViewById(R.id.imageView);
         imageButton = findViewById(R.id.imageButton);
 
@@ -106,20 +105,7 @@ public class EditJournalActivity extends AppCompatActivity {
             }
         });
 
-//        Delete button clicked
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteJournal();
-            }
-        });
     }
 
-//    Creating deleteJournal method
-    private void deleteJournal() {
-        databaseReference.removeValue();
-        Toast.makeText(this, "Journal deleted successfully!", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(EditJournalActivity.this, MainActivity.class);
-        startActivity(intent);
-    }
+
 }

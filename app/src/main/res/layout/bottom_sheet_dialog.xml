@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_below="@id/journalTitle"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/ic_photo"
         android:layout_centerVertical="true"
         android:scaleType="centerCrop"
         android:layout_marginBottom="20dp"

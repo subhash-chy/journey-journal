@@ -51,11 +51,11 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHold
 //        holder.descriptionTV.setText(journalRVModal.getDescription());
         holder.locationTV.setText(journalRVModal.getLocation());
 
+//        declaring image url initially to null
         String imageUrl  = null;
-//                =  "https://images.pexels.com/photos/10164553/pexels-photo-10164553.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
-
         imageUrl = journalRVModal.getImageURL();
         Picasso.get().load(imageUrl).fit().into(holder.imageView);
+        holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 
         setAnimation(holder.itemView,position);
@@ -66,6 +66,19 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHold
                 journalClickInterface.onJournalClick(position);
             }
         });
+
+//        holder.share.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent();
+//                intent.setAction(Intent.ACTION_SEND);
+//                intent.putExtra(Intent.EXTRA_TEXT, "Let's go for a trip to "
+//                        + journals.getTitle() + "\n" + journals.getDescription() + "\n" + journals.getImage());
+//                intent.setType("text/plain");
+//                holder.share.getContext().startActivity(Intent.createChooser(intent, "Send to"));
+//            }
+//        });
+//    }
     }
     private void setAnimation(View itemsView, int position){
         if(position>lastPosition){

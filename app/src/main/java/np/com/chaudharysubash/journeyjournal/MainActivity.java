@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
         bottomSheetDialog.show();
 
         Button editButton = layout.findViewById(R.id.edit);
-//        Button deleteButton = layout.findViewById(R.id.deleteButton);
+        Button deleteButton = layout.findViewById(R.id.deleteButton);
 
         TextView journalTitleTV = layout.findViewById(R.id.journalTitle);
         TextView journalDescriptionTV = layout.findViewById(R.id.journalDescription);
@@ -159,6 +159,16 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
         Picasso.get().load(imageUrl).fit().into(imageView);
 
 //        Delete button pressed
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                databaseReference.removeValue();
+                Toast.makeText(MainActivity.this, "Journal deleted successfully!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
 //        Edit button pressed
