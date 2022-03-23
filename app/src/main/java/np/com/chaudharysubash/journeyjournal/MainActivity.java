@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,26 +22,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements JournalAdapter.JournalClickInterface {
-    private RecyclerView recyclerView;
     private ProgressBar loadingBar;
-    private FloatingActionButton addNewJournal;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-    private FirebaseStorage firebaseStorage;
     private ArrayList<JournalRVModal> journalRVModalArrayList;
 
     private ScrollView bottomSheetRL;
@@ -53,18 +50,14 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.rvJournal);
-//        recyclerView.setHasFixedSize(true);
+        RecyclerView recyclerView = findViewById(R.id.rvJournal);
         loadingBar = findViewById(R.id.progressBar);
 
 //        Showing progressbar as soon as user comes to MainActivity
         loadingBar.setVisibility(View.VISIBLE);
 
-        addNewJournal = findViewById(R.id.addNewJournal);
-
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Journals");
-        firebaseStorage = FirebaseStorage.getInstance();
         journalRVModalArrayList = new ArrayList<>();
 
         bottomSheetRL = findViewById(R.id.bottomSheet);
@@ -73,25 +66,16 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(journalAdapter);
 
-
+//      Calling getAllJournal method
         getAllJournals();
     }
 
-
-
-
-//    addNewJournal.setOnClickListener(new View.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//            Intent intent = new Intent(MainActivity.this, AddJournalActivity.class);
-//            startActivity(intent);
-//        }
-//    });
 
 //    Creating method for reading all journals coming from firebase database
     private void getAllJournals(){
         journalRVModalArrayList.clear();
         databaseReference.addChildEventListener(new ChildEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 loadingBar.setVisibility(View.GONE);
@@ -99,13 +83,15 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
                 journalAdapter.notifyDataSetChanged();
             }
 
+
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
                 loadingBar.setVisibility(View.GONE);
                 journalAdapter.notifyDataSetChanged();
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
                 loadingBar.setVisibility(View.GONE);
@@ -113,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
 
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 loadingBar.setVisibility(View.GONE);
@@ -127,14 +114,16 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
 
     }
 
+//    clicking individual item will open bottom sheet navigation
     @Override
     public void onJournalClick(int position) {
         displayBottomSheet(journalRVModalArrayList.get(position));
-
     }
 
+//    Creating displayBottomSheet method
     private void displayBottomSheet(JournalRVModal journalRVModal){
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+//        Inflating bottom sheet dialog
         View layout = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_dialog, bottomSheetRL);
         bottomSheetDialog.setContentView(layout);
         bottomSheetDialog.setCancelable(false);
@@ -155,34 +144,27 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
         journalLocationTV.setText(journalRVModal.getLocation());
         dateTV.setText(journalRVModal.getDate());
 
-//        Loading image
-        String imageUrl = null;
-        imageUrl = journalRVModal.getImageURL();
+//        Loading image by using Picasso library
+        String imageUrl = journalRVModal.getImageURL();
         Picasso.get().load(imageUrl).fit().into(imageView);
 
         String journalId = journalRVModal.getJournalId();
         DatabaseReference databaseReference2 = firebaseDatabase.getReference("Journals").child(journalId);
-        //        Delete button pressed
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                databaseReference2.removeValue();
-                Toast.makeText(MainActivity.this, "Journal deleted successfully!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        //        Delete the item when delete button is pressed
+        deleteButton.setOnClickListener(view -> {
+            databaseReference2.removeValue();
+            Toast.makeText(MainActivity.this, "Journal deleted successfully!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
 
 
 //        Edit button pressed
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, EditJournalActivity.class);
-                intent.putExtra("journal", journalRVModal);
-                startActivity(intent);
-            }
+        editButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, EditJournalActivity.class);
+            intent.putExtra("journal", journalRVModal);
+            startActivity(intent);
         });
     }
 
@@ -196,21 +178,20 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        switch (id){
-            case R.id.logOut:
-                Toast.makeText(this, "Logged out successfully!", Toast.LENGTH_SHORT).show();
-                mAuth.signOut();
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        if (id == R.id.logOut) {
+            Toast.makeText(this, "Logged out successfully!", Toast.LENGTH_SHORT).show();
+//                Signing out and opening login activity
+            mAuth.signOut();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
 
     }
 
+//    clicking floating action button will open AddJournalActivity
     public void onClickAddNewJournal(View view) {
         Intent intent = new Intent(MainActivity.this, AddJournalActivity.class);
             startActivity(intent);

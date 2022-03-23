@@ -2,7 +2,6 @@ package np.com.chaudharysubash.journeyjournal;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,24 +9,20 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.PicassoProvider;
 
 import java.util.ArrayList;
 
 public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHolder> {
 //    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private ArrayList<JournalRVModal> journalRVModalArrayList;
-    private Context context;
+    private final ArrayList<JournalRVModal> journalRVModalArrayList;
+    private final Context context;
     int lastPosition = -1;
 
-    private JournalClickInterface journalClickInterface;
+    private final JournalClickInterface journalClickInterface;
 
 //    Creating constructor
     public JournalAdapter(ArrayList<JournalRVModal> journalRVModalArrayList, Context context, JournalClickInterface journalClickInterface) {
@@ -51,24 +46,17 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHold
 //        holder.descriptionTV.setText(journalRVModal.getDescription());
         holder.locationTV.setText(journalRVModal.getLocation());
 
-//        declaring image url initially to null
-        String imageUrl  = null;
+//        declaring image url
+        String imageUrl;
         imageUrl = journalRVModal.getImageURL();
         Picasso.get().load(imageUrl).fit().into(holder.imageView);
         holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 //        Setting date
         holder.dateTV.setText(journalRVModal.getDate());
-
-
         setAnimation(holder.itemView,position);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                journalClickInterface.onJournalClick(position);
-            }
-        });
+        holder.itemView.setOnClickListener(view -> journalClickInterface.onJournalClick(position));
 
 //        holder.share.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -96,10 +84,12 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHold
         return journalRVModalArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 //        descriptionTV
-        private TextView titleTV, locationTV, dateTV;
-        private ImageView imageView;
+        private final TextView titleTV;
+        private final TextView locationTV;
+        private final TextView dateTV;
+        private final ImageView imageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTV = itemView.findViewById(R.id.journalTitle);
