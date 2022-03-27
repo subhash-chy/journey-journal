@@ -9,18 +9,20 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHolder> {
-    private ArrayList<JournalRVModal> journalRVModalArrayList;
-    private Context context;
+//    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final ArrayList<JournalRVModal> journalRVModalArrayList;
+    private final Context context;
     int lastPosition = -1;
 
-    private JournalClickInterface journalClickInterface;
+    private final JournalClickInterface journalClickInterface;
 
 //    Creating constructor
     public JournalAdapter(ArrayList<JournalRVModal> journalRVModalArrayList, Context context, JournalClickInterface journalClickInterface) {
@@ -44,16 +46,30 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHold
 //        holder.descriptionTV.setText(journalRVModal.getDescription());
         holder.locationTV.setText(journalRVModal.getLocation());
 
-//        Picasso.get().load(journalRVModal.getJournalImg().into(holder.imageView));
+//        declaring image url
+        String imageUrl;
+        imageUrl = journalRVModal.getImageURL();
+        Picasso.get().load(imageUrl).fit().into(holder.imageView);
+        holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
+//        Setting date
+        holder.dateTV.setText(journalRVModal.getDate());
         setAnimation(holder.itemView,position);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                journalClickInterface.onJournalClick(position);
-            }
-        });
+        holder.itemView.setOnClickListener(view -> journalClickInterface.onJournalClick(position));
+
+//        holder.share.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent();
+//                intent.setAction(Intent.ACTION_SEND);
+//                intent.putExtra(Intent.EXTRA_TEXT, "Let's go for a trip to "
+//                        + journals.getTitle() + "\n" + journals.getDescription() + "\n" + journals.getImage());
+//                intent.setType("text/plain");
+//                holder.share.getContext().startActivity(Intent.createChooser(intent, "Send to"));
+//            }
+//        });
+//    }
     }
     private void setAnimation(View itemsView, int position){
         if(position>lastPosition){
@@ -68,17 +84,18 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.ViewHold
         return journalRVModalArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 //        descriptionTV
-        private TextView titleTV, locationTV;
-        private ImageView imageView;
+        private final TextView titleTV;
+        private final TextView locationTV;
+        private final TextView dateTV;
+        private final ImageView imageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTV = itemView.findViewById(R.id.journalTitle);
             locationTV = itemView.findViewById(R.id.journalLocation);
             imageView = itemView.findViewById(R.id.ivImage);
-
-
+            dateTV = itemView.findViewById(R.id.journalDate);
         }
     }
 

@@ -3,18 +3,28 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Level 6/Android Development/journey-journal/app/src/main/res/drawable/ic_photo.xml" value="0.1" />
+        <entry key="..\:/Level 6/Android Development/journey-journal/app/src/main/res/drawable/insert_photo.xml" value="0.1" />
+        <entry key="..\:/Level 6/Android Development/journey-journal/app/src/main/res/layout/activity_add_journal.xml" value="0.184375" />
+        <entry key="..\:/Level 6/Android Development/journey-journal/app/src/main/res/layout/activity_edit_journal.xml" value="0.184375" />
+        <entry key="..\:/Level 6/Android Development/journey-journal/app/src/main/res/layout/activity_login.xml" value="0.184375" />
+        <entry key="..\:/Level 6/Android Development/journey-journal/app/src/main/res/layout/activity_main.xml" value="0.184375" />
+        <entry key="..\:/Level 6/Android Development/journey-journal/app/src/main/res/layout/activity_register.xml" value="0.22" />
+        <entry key="..\:/Level 6/Android Development/journey-journal/app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.3333333333333333" />
+        <entry key="..\:/Level 6/Android Development/journey-journal/app/src/main/res/layout/journal_item.xml" value="0.22" />
+        <entry key="..\:/Level 6/Android Development/journey-journal/app/src/main/res/menu/menu_main.xml" value="0.184375" />
         <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/drawable/custom_button.xml" value="0.103" />
         <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/drawable/insert_photo.xml" value="0.1" />
         <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/drawable/round_drawable.xml" value="0.1085" />
-        <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/layout/activity_add_journal.xml" value="0.14666666666666667" />
+        <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/layout/activity_add_journal.xml" value="0.16666666666666666" />
         <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/layout/activity_edit_journal.xml" value="0.16875" />
         <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/layout/activity_login.xml" value="0.22" />
-        <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/layout/activity_main.xml" value="0.12" />
+        <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/layout/activity_maps.xml" value="0.16875" />
         <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/layout/activity_register.xml" value="0.22" />
         <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.22" />
-        <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/layout/journal_item.xml" value="0.3333333333333333" />
+        <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/layout/journal_item.xml" value="0.12" />
         <entry key="..\:/My Projects/JourneyJournal2/app/src/main/res/menu/menu_main.xml" value="0.22" />
       </map>
     </option>
