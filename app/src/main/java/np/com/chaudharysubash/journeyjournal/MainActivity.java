@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +33,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements JournalAdapter.JournalClickInterface {
     private ProgressBar loadingBar;
+    private TextView tvLoading;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -52,9 +52,10 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
 
         RecyclerView recyclerView = findViewById(R.id.rvJournal);
         loadingBar = findViewById(R.id.progressBar);
+        tvLoading = findViewById(R.id.tvLoading);
 
 //        Showing progressbar as soon as user comes to MainActivity
-        loadingBar.setVisibility(View.VISIBLE);
+//        loadingBar.setVisibility(View.VISIBLE);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Journals");
@@ -68,20 +69,26 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
 
 //      Calling getAllJournal method
         getAllJournals();
+
     }
 
 
 //    Creating method for reading all journals coming from firebase database
     private void getAllJournals(){
         journalRVModalArrayList.clear();
+
+//        loadingBar.setVisibility(View.GONE);
         databaseReference.addChildEventListener(new ChildEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
                 loadingBar.setVisibility(View.GONE);
+                tvLoading.setVisibility(View.GONE);
                 journalRVModalArrayList.add(snapshot.getValue(JournalRVModal.class));
                 journalAdapter.notifyDataSetChanged();
             }
+
 
 
             @SuppressLint("NotifyDataSetChanged")
@@ -110,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements JournalAdapter.Jo
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+
         });
 
     }

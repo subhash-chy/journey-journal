@@ -81,7 +81,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/password"
         android:textSize="18sp"
-        android:hint="Password"
+        android:hint="Confirm Password"
         android:inputType="textPassword"
         android:layout_marginTop="20dp"
         />
